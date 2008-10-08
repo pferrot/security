@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:security="http://www.springframework.org/schema/security"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+						   http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-2.0.4.xsd">
+	
+	<bean id="security.userDao" class="com.pferrot.security.dao.jdbc.UserDaoJdbcImpl">
+		<property name="dataSource">
+			<ref bean="security.dataSource"/>
+		</property>
+		<property name="jdbcDaoUtils">
+			<ref bean="core.jdbcDaoUtils"/>
+		</property>
+	</bean>	
+	
+	<bean id="security.customUserDetailsService" class="com.pferrot.security.authentication.userdetails.CustomUserDetailsService">
+		<property name="userDao" ref="security.userDao" />
+	</bean> 
+	
+	<bean id="security.lastLoginListener" class="com.pferrot.security.authentication.listener.LastLoginListener">
+    	<property name="userDao" ref="security.userDao"/>
+	</bean> 
+
+	<!-- 
+	It the authentication manager needs to be referenced.
+	 -->
+	<security:authentication-manager alias="authenticationManager" />
+	
+	<bean id="security.daoAuthenticationProvider" class="org.springframework.security.providers.dao.DaoAuthenticationProvider">
+		<property name="userDetailsService" ref="security.customUserDetailsService" />
+		<!--
+			No cache is used by default. 
+			<property name="userCache" ref="userCache"/>
+		-->
+		<property name="passwordEncoder">
+			<bean class="org.springframework.security.providers.encoding.Md5PasswordEncoder" />
+		</property>
+		<security:custom-authentication-provider />
+	</bean>	
+	
+</beans>
