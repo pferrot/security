@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Jul 30, 2007 12:22:20 PM by Hibernate Tools 3.2.0.beta8 -->
+<!-- 
+TODO: non-lazy fetching should never be used...
+ -->
+<hibernate-mapping>
+    <class name="com.pferrot.security.model.Role" table="ROLES">
+        <comment></comment>
+        <id name="id" column="ROLE_ID">
+            <generator class="increment" />
+        </id>
+        <property name="name" column="NAME">
+        </property>
+        <set name="users" ></set>
+        <property name="lastName" type="string">
+            <column name="last_name" length="50" not-null="true">
+                <comment></comment>
+            </column>
+        </property>
+<!--		<property name="email" type="string">-->
+<!--            <column name="email" length="50">-->
+<!--                <comment></comment>-->
+<!--            </column>-->
+<!--        </property>-->
+<!--		<property name="mobilePhone" type="string">-->
+<!--            <column name="mobile_phone" length="50">-->
+<!--                <comment></comment>-->
+<!--            </column>-->
+<!--        </property>-->
+<!--   		<property name="homePhone" type="string">-->
+<!--            <column name="home_phone" length="50">-->
+<!--                <comment></comment>-->
+<!--            </column>-->
+<!--        </property>-->
+<!--        <many-to-one name="friends" class="com.pferrot.sharedcalendar.model.Person" fetch="select">-->
+<!--            <column name="CATEGORY_ID_FK" precision="10" scale="0" not-null="true">-->
+<!--                <comment></comment>-->
+<!--            </column>-->
+<!--        </many-to-one>-->
+    </class>
+</hibernate-mapping>
