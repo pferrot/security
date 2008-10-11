@@ -4,7 +4,7 @@ import com.pferrot.security.model.User;
 
 public interface UserDao {
 	
-	Integer createUser(User user);
+	Long createUser(User user);
 	
 	User findUser(Long id);
 	

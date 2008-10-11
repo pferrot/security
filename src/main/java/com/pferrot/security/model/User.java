@@ -3,14 +3,37 @@ package com.pferrot.security.model;
 import java.util.Collection;
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "USERS")
 public class User {
 	
+	@Id @GeneratedValue
+	@Column(name = "ID")	
 	private Long id;
+	
+	@Column(name = "USERNAME", nullable = false, length = 20)
 	private String username;
+	
+	@Column(name = "PASSWORD", nullable = false, length = 100)
 	private String password;
+	
+	@Column(name = "ENABLED", nullable = false)
 	private Boolean enabled;
+	
+	@Column(name = "CREATION_DATE", nullable = false)
 	private Date creationDate;
+	
+	@Column(name = "LAST_LOGIN_DATE")
 	private Date lastLoginDate;
+	
+	@ManyToMany(targetEntity=com.pferrot.security.model.Role.class, mappedBy="users")
 	private Collection<Role> roles;
 
 	public Long getId() {

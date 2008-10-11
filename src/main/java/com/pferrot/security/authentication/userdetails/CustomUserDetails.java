@@ -5,28 +5,27 @@ import org.springframework.security.userdetails.UserDetails;
 
 import com.pferrot.security.model.Role;
 import com.pferrot.security.model.User;
-import com.pferrot.security.model.UserWithRoles;
 
 public class CustomUserDetails implements UserDetails {
 	
-	private UserWithRoles userWithRoles;
+	private User user;
 	
-	public CustomUserDetails(UserWithRoles userWithRoles) {
+	public CustomUserDetails(User user) {
 		super();
-		if (userWithRoles == null) {
+		if (user == null) {
 			throw new IllegalArgumentException("'user' parameter cannot be null'");
 		}
-		this.userWithRoles = userWithRoles;
+		this.user = user;
 	}
 
 	public GrantedAuthority[] getAuthorities() {
-		if (userWithRoles.getRoles() == null) {
+		if (user.getRoles() == null) {
 			return new GrantedAuthority[0];
 		}
-		GrantedAuthority[] result = new GrantedAuthority[userWithRoles.getRoles().size()];
+		GrantedAuthority[] result = new GrantedAuthority[user.getRoles().size()];
 		int counter = 0;
 		// Create a GrantedAuthority for each role.
-		for (final Role role: userWithRoles.getRoles()) {
+		for (final Role role: user.getRoles()) {
 			CustomGrantedAuthority authority = new CustomGrantedAuthority(role);
 			result[counter] = authority;
 			counter++;
@@ -35,11 +34,11 @@ public class CustomUserDetails implements UserDetails {
 	}	
 
 	public String getPassword() {
-		return userWithRoles.getUser().getPassword();
+		return user.getPassword();
 	}
 
 	public String getUsername() {
-		return userWithRoles.getUser().getUsername();
+		return user.getUsername();
 	}
 
 	public boolean isAccountNonExpired() {
@@ -55,6 +54,6 @@ public class CustomUserDetails implements UserDetails {
 	}
 
 	public boolean isEnabled() {
-		return userWithRoles.getUser().getEnabled().booleanValue();
+		return user.getEnabled().booleanValue();
 	}
 }

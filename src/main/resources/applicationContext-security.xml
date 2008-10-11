@@ -5,25 +5,78 @@
 	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
 						   http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-2.0.4.xsd">
 	
-	<bean id="security.userDao" class="com.pferrot.security.dao.jdbc.UserDaoJdbcImpl">
-		<property name="dataSource">
-			<ref bean="security.dataSource"/>
+	<bean id="security.userDaoTarget" class="com.pferrot.security.dao.hibernate.UserDaoHibernateImpl">
+		<property name="sessionFactory" ref="security.sessionFactory" />
+	</bean>
+	<bean id="security.userDao" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager" ref="security.transactionManager"/>
+		<property name="target">
+			<ref local="security.userDaoTarget"/>
 		</property>
-		<property name="jdbcDaoUtils">
-			<ref bean="core.jdbcDaoUtils"/>
+		<property name="proxyInterfaces">
+           <value>com.pferrot.security.dao.UserDao</value>
+         </property>		
+		<property name="transactionAttributes">
+			<props>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly</prop>
+			</props>
 		</property>
 	</bean>	
 	
-	<bean id="security.customUserDetailsService" class="com.pferrot.security.authentication.userdetails.CustomUserDetailsService">
+	<bean id="security.customUserDetailsServiceTarget" class="com.pferrot.security.authentication.userdetails.CustomUserDetailsService">
 		<property name="userDao" ref="security.userDao" />
-	</bean> 
+	</bean>
+	<bean id="security.customUserDetailsService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager" ref="security.transactionManager" />
+		<property name="target">
+			<ref local="security.customUserDetailsServiceTarget" />
+		</property>
+		<property name="proxyInterfaces">
+           <value>org.springframework.security.userdetails.UserDetailsService</value>
+         </property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly</prop>
+			</props>
+		</property>         
+<!--         <property name="interceptorNames">-->
+<!--           <list>-->
+<!--              <value>security.hibernateInterceptor</value>-->
+<!--           </list>-->
+<!--         </property>-->
+	</bean>
 	
-	<bean id="security.lastLoginListener" class="com.pferrot.security.authentication.listener.LastLoginListener">
+<!--	<bean id="security.hibernateInterceptor" class="org.springframework.orm.hibernate3.HibernateInterceptor">-->
+<!--         <property name="sessionFactory">-->
+<!--           <ref bean="security.sessionFactory"/>-->
+<!--         </property>-->
+<!--    </bean>-->
+
+	
+	<bean id="security.lastLoginListenerTarget" class="com.pferrot.security.authentication.listener.LastLoginListener">
     	<property name="userDao" ref="security.userDao"/>
-	</bean> 
+	</bean>	
+	<bean id="security.lastLoginListener" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager" ref="security.transactionManager"/>
+		<property name="target">
+			<ref local="security.lastLoginListenerTarget"/>
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="onApplicationEvent">PROPAGATION_REQUIRED</prop>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly</prop>
+			</props>
+		</property>
+	</bean>
 
 	<!-- 
-	It the authentication manager needs to be referenced.
+	If the authentication manager needs to be referenced.
 	 -->
 	<security:authentication-manager alias="authenticationManager" />
 	

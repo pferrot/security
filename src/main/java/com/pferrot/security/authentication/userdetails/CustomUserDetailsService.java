@@ -7,7 +7,6 @@ import org.springframework.security.userdetails.UsernameNotFoundException;
 
 import com.pferrot.security.dao.UserDao;
 import com.pferrot.security.model.User;
-import com.pferrot.security.model.UserWithRoles;
 
 
 // TODO: also implement UserDetailsManager and GroupManager
@@ -18,16 +17,16 @@ public class CustomUserDetailsService implements UserDetailsService {
 	public UserDetails loadUserByUsername(final String username)
 			throws UsernameNotFoundException, DataAccessException {
 		
-		UserWithRoles userWithRoles = userDao.findUserWithRoles(username);
-		if (userWithRoles == null) {
+		User user = userDao.findUser(username);
+		if (user == null) {
 			throw new UsernameNotFoundException("No user with username '" +  username + "' could be found");
 		}
-		else if (userWithRoles.getRoles() == null ||
-				 userWithRoles.getRoles().size() == 0) {
+		else if (user.getRoles() == null ||
+				 user.getRoles().size() == 0) {
 			throw new UsernameNotFoundException("User with username '" +  username + "' is not associated to any role");
 			
 		}
-		UserDetails userDetails = new CustomUserDetails(userWithRoles);
+		UserDetails userDetails = new CustomUserDetails(user);
 		return userDetails;
 	}		
 
