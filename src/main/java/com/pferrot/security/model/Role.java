@@ -1,6 +1,7 @@
 package com.pferrot.security.model;
 
-import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -22,13 +23,13 @@ public class Role {
 	@Column(name = "NAME", nullable = false, length = 20)
 	private String name;
 	
-	
-//	@JoinTable(name = "USERS_ROLES",
-//	           joinColumns=@JoinColumn(name="ROLE_ID", referencedColumnName="ID"),
-//	           inverseJoinColumns=@JoinColumn(name="USER_ID", referencedColumnName="ID")
-//	           )
-	@ManyToMany(targetEntity = com.pferrot.security.model.User.class)	
-	private Collection<User> users;
+	@ManyToMany(targetEntity = com.pferrot.security.model.User.class)
+	@JoinTable(
+			name = "USERS_ROLES",
+	        joinColumns = {@JoinColumn(name="ROLE_ID", referencedColumnName="ID")},
+	        inverseJoinColumns = {@JoinColumn(name="USER_ID", referencedColumnName="ID")}
+	)
+	private Set<User> users = new HashSet<User>();
 	
 	public Long getId() {
 		return id;
@@ -46,11 +47,11 @@ public class Role {
 		this.name = name;
 	}
 
-	public Collection<User> getUsers() {
+	public Set<User> getUsers() {
 		return users;
 	}
 
-	public void setUsers(Collection<User> users) {
+	public void setUsers(Set<User> users) {
 		this.users = users;
 	}
 }
