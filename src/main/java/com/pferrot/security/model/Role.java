@@ -15,6 +15,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "ROLES")
 public class Role {
+	public static final String USER_ROLE_NAME = "USER";
+	public static final String ADMIN_ROLE_NAME = "ADMIN";
 	
 	@Id @GeneratedValue
 	@Column(name = "ID")	

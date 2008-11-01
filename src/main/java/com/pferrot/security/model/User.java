@@ -91,5 +91,14 @@ public class User {
 
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
+	}
+	
+	public void addRole(Role role) {
+		if (role == null) {
+			throw new IllegalArgumentException("'role' parameter must not be null");
+		}
+		role.getUsers().add(this);
+		roles.add(role);
 	}	
+	
 }
