@@ -26,6 +26,27 @@
 		</property>
 	</bean>	
 	
+	<bean id="security.roleDaoTarget" class="com.pferrot.security.dao.hibernate.RoleDaoHibernateImpl">
+		<property name="sessionFactory" ref="security.sessionFactory" />
+	</bean>
+	<bean id="security.roleDao" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager" ref="security.transactionManager"/>
+		<property name="target">
+			<ref local="security.roleDaoTarget"/>
+		</property>
+		<property name="proxyInterfaces">
+           <value>com.pferrot.security.dao.RoleDao</value>
+         </property>		
+		<property name="transactionAttributes">
+			<props>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly</prop>
+			</props>
+		</property>
+	</bean>		
+	
 	<bean id="security.customUserDetailsServiceTarget" class="com.pferrot.security.authentication.userdetails.CustomUserDetailsService">
 		<property name="userDao" ref="security.userDao" />
 	</bean>
@@ -86,10 +107,12 @@
 			No cache is used by default. 
 			<property name="userCache" ref="userCache"/>
 		-->
-		<property name="passwordEncoder">
-			<bean class="org.springframework.security.providers.encoding.Md5PasswordEncoder" />
-		</property>
+		<property name="passwordEncoder" ref="security.passwordEncoder"/>
 		<security:custom-authentication-provider />
-	</bean>	
+	</bean>
+	
+	<bean id="security.passwordEncoder" class="org.springframework.security.providers.encoding.MessageDigestPasswordEncoder">
+	     <constructor-arg value="MD5"/>
+	 </bean>	
 	
 </beans>
