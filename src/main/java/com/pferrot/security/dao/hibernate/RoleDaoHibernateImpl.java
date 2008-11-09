@@ -10,6 +10,9 @@ import com.pferrot.security.model.Role;
 
 public class RoleDaoHibernateImpl extends HibernateDaoSupport implements RoleDao {
 
+	public Long createRole(Role role) {
+		return (Long)getHibernateTemplate().save(role);
+	}	
 
 	public Role findRole(String name) {
 		List<Role> list = getHibernateTemplate().find("from Role role where role.name = ?", name);
@@ -28,6 +31,5 @@ public class RoleDaoHibernateImpl extends HibernateDaoSupport implements RoleDao
 	public void updateRole(Role role) {
 		getHibernateTemplate().update(role);			
 	}
-
 
 }
