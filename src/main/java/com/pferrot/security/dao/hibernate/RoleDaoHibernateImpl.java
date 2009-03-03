@@ -31,5 +31,9 @@ public class RoleDaoHibernateImpl extends HibernateDaoSupport implements RoleDao
 	public void updateRole(Role role) {
 		getHibernateTemplate().update(role);			
 	}
+	
+	public Role findRole(Long id) {
+		return (Role)getHibernateTemplate().load(Role.class, id);
+	}
 
 }

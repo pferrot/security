@@ -34,7 +34,7 @@ public class User {
 	@Column(name = "LAST_LOGIN_DATE")
 	private Date lastLoginDate;
 	
-	@ManyToMany(targetEntity=com.pferrot.security.model.Role.class, mappedBy="users")
+	@ManyToMany(targetEntity=com.pferrot.security.model.Role.class)
 	private Set<Role> roles = new HashSet<Role>();
 
 	public Long getId() {
@@ -97,7 +97,6 @@ public class User {
 		if (role == null) {
 			throw new IllegalArgumentException("'role' parameter must not be null");
 		}
-		role.getUsers().add(this);
 		roles.add(role);
 	}	
 	
