@@ -50,7 +50,12 @@ public class SecurityUtils {
 	public static String getCurrentUsername() {
 		final User currentUser = getCurrentUser();
 		if (currentUser != null) {
-			return currentUser.getUsername();
+			final String username = currentUser.getUsername();
+			// No username? Should never happen.
+			if (username == null || username.trim().length() == 0) {
+				throw new SecurityException("User without a username: " + currentUser.getId());
+			}
+			return username;
 		}
 		else {
 			return null;
