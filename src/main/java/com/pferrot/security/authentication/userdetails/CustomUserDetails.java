@@ -32,7 +32,11 @@ public class CustomUserDetails implements UserDetails {
 		}
 		return result;
 	}	
-
+	
+	public User getUser() {
+		return user;
+	}
+	
 	public String getPassword() {
 		return user.getPassword();
 	}
