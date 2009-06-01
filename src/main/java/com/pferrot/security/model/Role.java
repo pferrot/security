@@ -6,8 +6,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.envers.Audited;
+
 @Entity
 @Table(name = "ROLES")
+@Audited
 public class Role {
 	public static final String USER_ROLE_NAME = "USER";
 	public static final String ADMIN_ROLE_NAME = "ADMIN";
