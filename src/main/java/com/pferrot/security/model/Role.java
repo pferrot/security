@@ -10,7 +10,6 @@ import org.hibernate.envers.Audited;
 
 @Entity
 @Table(name = "ROLES")
-@Audited
 public class Role {
 	public static final String USER_ROLE_NAME = "USER";
 	public static final String ADMIN_ROLE_NAME = "ADMIN";
@@ -20,6 +19,7 @@ public class Role {
 	private Long id;
 	
 	@Column(name = "NAME", nullable = false, length = 20)
+	@Audited
 	private String name;
 	
 	public Long getId() {

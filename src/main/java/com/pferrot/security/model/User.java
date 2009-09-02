@@ -15,7 +15,6 @@ import org.hibernate.envers.Audited;
 
 @Entity
 @Table(name = "USERS")
-@Audited
 public class User {
 	
 	@Id @GeneratedValue
@@ -23,12 +22,15 @@ public class User {
 	private Long id;
 	
 	@Column(name = "USERNAME", nullable = false, length = 20)
+	@Audited
 	private String username;
 	
 	@Column(name = "PASSWORD", nullable = false, length = 100)
+	@Audited
 	private String password;
 	
 	@Column(name = "ENABLED", nullable = false)
+	@Audited
 	private Boolean enabled;
 	
 	@Column(name = "CREATION_DATE", nullable = false)
@@ -38,6 +40,7 @@ public class User {
 	private Date lastLoginDate;
 	
 	@ManyToMany(targetEntity=com.pferrot.security.model.Role.class)
+	@Audited
 	private Set<Role> roles = new HashSet<Role>();
 
 	public Long getId() {
