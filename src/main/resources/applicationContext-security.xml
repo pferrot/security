@@ -107,7 +107,10 @@
 			No cache is used by default. 
 			<property name="userCache" ref="userCache"/>
 		-->
+		<!--
+		Password not encoded in the DB if this is commented out.
 		<property name="passwordEncoder" ref="security.passwordEncoder"/>
+		 -->
 		<security:custom-authentication-provider />
 	</bean>
 	
