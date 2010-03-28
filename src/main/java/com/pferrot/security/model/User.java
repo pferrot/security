@@ -104,6 +104,30 @@ public class User {
 			throw new IllegalArgumentException("'role' parameter must not be null");
 		}
 		roles.add(role);
-	}	
+	}
+
+	// Not ideal for performance, but fine since there are only 2 roles in the system.
+	public boolean isAdmin() {
+		if (roles != null) {
+			for (Role role: roles) {
+				if (Role.ADMIN_ROLE_NAME.equals(role.getName())) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	// Not ideal for performance, but fine since there are only 2 roles in the system.
+	public boolean isUser() {
+		if (roles != null) {
+			for (Role role: roles) {
+				if (Role.USER_ROLE_NAME.equals(role.getName())) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 	
 }
