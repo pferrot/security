@@ -38,6 +38,12 @@ public class User {
 	
 	@Column(name = "LAST_LOGIN_DATE")
 	private Date lastLoginDate;
+
+	@Column(name = "ACTIVATION_CODE", nullable = false, length = 30)
+	private String activationCode;
+	
+	@Column(name = "ACTIVATION_DATE")
+	private Date activationDate;
 	
 	@ManyToMany(targetEntity=com.pferrot.security.model.Role.class)
 	@Audited
@@ -89,6 +95,22 @@ public class User {
 
 	public void setLastLoginDate(Date lastLoginDate) {
 		this.lastLoginDate = lastLoginDate;
+	}
+
+	public String getActivationCode() {
+		return activationCode;
+	}
+
+	public void setActivationCode(String activationCode) {
+		this.activationCode = activationCode;
+	}
+
+	public Date getActivationDate() {
+		return activationDate;
+	}
+
+	public void setActivationDate(Date activationDate) {
+		this.activationDate = activationDate;
 	}
 
 	public Set<Role> getRoles() {

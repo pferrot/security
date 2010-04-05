@@ -24,8 +24,24 @@ public class PasswordGenerator {
 		tempFloat = tempFloat * (MAX_SIZE - MIN_SIZE);
 		int passwordSize = MIN_SIZE + Math.round(tempFloat);
 		
+		return getNewPassword(passwordSize);	
+	}
+
+	/**
+	 * Return a random password containing the specified number of characters.
+	 * Characters are a-z, A-Z, 0-9.
+	 * 
+	 * @param passwordSize
+	 * @return
+	 */
+	public static String getNewPassword(final int pPasswordSize) {
+		Random random = new Random();
+		
+		// Password size.
+		float tempFloat;
+		
 		StringBuffer result = new StringBuffer();
-		for (int i = 0; i < passwordSize; i++) {
+		for (int i = 0; i < pPasswordSize; i++) {
 			tempFloat = random.nextFloat();
 			tempFloat = tempFloat * AVAILABLE_CHARACTERS.length - 1;
 			char nextCharacter = AVAILABLE_CHARACTERS[Math.round(tempFloat)];
