@@ -4,6 +4,8 @@ import java.util.Random;
 
 public class PasswordGenerator {
 	
+	private static Random RANDOM = new Random();
+	
 	private static final int MIN_SIZE = 5;
 	private static final int MAX_SIZE = 8;
 	private static char[] AVAILABLE_CHARACTERS = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
@@ -16,15 +18,8 @@ public class PasswordGenerator {
 	 * 
 	 * @return
 	 */
-	public static String getNewPassword() {
-		Random random = new Random();
-		
-		// Password size.
-		float tempFloat = random.nextFloat();
-		tempFloat = tempFloat * (MAX_SIZE - MIN_SIZE);
-		int passwordSize = MIN_SIZE + Math.round(tempFloat);
-		
-		return getNewPassword(passwordSize);	
+	public static String getNewPassword() {		
+		return getNewPassword(getRandom(MIN_SIZE, MAX_SIZE));	
 	}
 
 	/**
@@ -35,19 +30,24 @@ public class PasswordGenerator {
 	 * @return
 	 */
 	public static String getNewPassword(final int pPasswordSize) {
-		Random random = new Random();
-		
-		// Password size.
-		float tempFloat;
-		
 		StringBuffer result = new StringBuffer();
 		for (int i = 0; i < pPasswordSize; i++) {
-			tempFloat = random.nextFloat();
-			tempFloat = tempFloat * AVAILABLE_CHARACTERS.length - 1;
-			char nextCharacter = AVAILABLE_CHARACTERS[Math.round(tempFloat)];
+			char nextCharacter = AVAILABLE_CHARACTERS[getRandom(0, AVAILABLE_CHARACTERS.length - 1)];
 			result.append(nextCharacter);
-		}
-		
+		}		
 		return result.toString();	
+	}
+
+	/**
+	 * 
+	 * @param pMinValue
+	 * @param pMaxValue
+	 * @return
+	 */
+	private static int getRandom(final int pMinValue, final int pMaxValue) {
+		final int difference = pMaxValue - pMinValue;
+		float tempFloat = RANDOM.nextFloat();
+		tempFloat = tempFloat * difference; 
+		return Math.round(tempFloat) + pMinValue;		
 	}
 }
