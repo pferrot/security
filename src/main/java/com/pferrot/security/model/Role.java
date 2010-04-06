@@ -18,7 +18,7 @@ public class Role {
 	@Column(name = "ID")	
 	private Long id;
 	
-	@Column(name = "NAME", nullable = false, length = 20)
+	@Column(name = "NAME", unique = true, nullable = false, length = 20)
 	@Audited
 	private String name;
 	

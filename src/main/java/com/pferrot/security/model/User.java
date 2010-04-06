@@ -21,7 +21,7 @@ public class User {
 	@Column(name = "ID")	
 	private Long id;
 	
-	@Column(name = "USERNAME", nullable = false, length = 50)
+	@Column(name = "USERNAME", unique = true, nullable = false, length = 50)
 	@Audited
 	private String username;
 	
