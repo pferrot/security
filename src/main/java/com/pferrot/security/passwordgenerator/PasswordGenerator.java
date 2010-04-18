@@ -44,7 +44,7 @@ public class PasswordGenerator {
 	 * @param pMaxValue
 	 * @return
 	 */
-	private static int getRandom(final int pMinValue, final int pMaxValue) {
+	public static int getRandom(final int pMinValue, final int pMaxValue) {
 		final int difference = pMaxValue - pMinValue;
 		float tempFloat = RANDOM.nextFloat();
 		tempFloat = tempFloat * difference; 
