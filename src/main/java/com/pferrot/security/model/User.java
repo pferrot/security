@@ -1,5 +1,6 @@
 package com.pferrot.security.model;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -15,7 +16,7 @@ import org.hibernate.envers.Audited;
 
 @Entity
 @Table(name = "USERS")
-public class User {
+public class User implements Serializable {
 	
 	@Id @GeneratedValue
 	@Column(name = "ID")	
@@ -151,5 +152,37 @@ public class User {
 		}
 		return false;
 	}
-	
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		// This tests if null at the same time.
+		else if (!(obj instanceof User)){
+			return false;
+		}
+		else {
+			final User other = (User)obj;
+			return id != null && id.equals(other.getId());
+		}
+	}
+
+	@Override
+	public String toString() {
+		final StringBuffer sb = new StringBuffer();
+		sb.append("ID: ");
+		sb.append(getId());
+		sb.append(", username: ");
+		sb.append(getUsername());
+		return sb.toString();
+	}
 }
