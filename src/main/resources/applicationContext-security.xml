@@ -109,8 +109,8 @@
 		-->
 		<!--
 		Password not encoded in the DB if this is commented out.
-		<property name="passwordEncoder" ref="security.passwordEncoder"/>
-		 -->
+		-->
+		<property name="passwordEncoder" ref="security.passwordEncoder"/>		 
 		<security:custom-authentication-provider />
 	</bean>
 	

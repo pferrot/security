@@ -30,6 +30,9 @@ public class User implements Serializable {
 	@Audited
 	private String password;
 	
+	@Column(name = "RESET_PASSWORD_CODE", nullable = true, length = 100)
+	private String resetPasswordCode;
+	
 	@Column(name = "ENABLED", nullable = false)
 	@Audited
 	private Boolean enabled;
@@ -72,6 +75,14 @@ public class User implements Serializable {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getResetPasswordCode() {
+		return resetPasswordCode;
+	}
+
+	public void setResetPasswordCode(String resetPasswordCode) {
+		this.resetPasswordCode = resetPasswordCode;
 	}
 
 	public Boolean getEnabled() {
