@@ -3,13 +3,13 @@
 	<groupId>com.pferrot</groupId>
 	<artifactId>security</artifactId>
 	<packaging>jar</packaging>
-	<version>0.2</version>
+	<version>0.3-SNAPSHOT</version>
 	<name>security</name>
 	<url>http://maven.apache.org</url>
 	<scm>
-		<connection>scm:svn:svn://patrice-ws/svn/security/tags/security-0.2</connection>
-		<developerConnection>scm:svn:svn://patrice-ws/security/tags/security-0.2</developerConnection>
-		<url>http://patrice-ws/websvn/security/tags/security-0.2</url>
+		<connection>scm:svn:svn://patrice-ws/svn/security/trunk</connection>
+		<developerConnection>scm:svn:svn://patrice-ws/security/trunk</developerConnection>
+		<url>http://patrice-ws/websvn/security/trunk</url>
 	</scm>
 	<distributionManagement>
 		<repository>
